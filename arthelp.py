@@ -3,8 +3,6 @@ from PyQt5.QtWidgets import QApplication, QLabel, QFileDialog, QLineEdit, QVBoxL
 from PyQt5.QtGui import QPixmap, QImage, QColor, QIcon
 from PyQt5.QtCore import Qt, QPoint, QSettings
 
-#Модифицированный код ImageOverlayApp by @greencolourbluesky 
-
 class TransparentImageWindow(QWidget):
     def __init__(self, pixmap):
         super().__init__()
@@ -24,7 +22,6 @@ class TransparentImageWindow(QWidget):
 
         self.settings = QSettings('ImageOverlayApp', 'positions')
 
-        # Restore last position
         self.move(self.settings.value('lastPosition', QPoint(200, 200), type=QPoint))
 
     def mousePressEvent(self, event):
@@ -73,7 +70,7 @@ class TransparentImageWindow(QWidget):
         self.show()
 
     def closeEvent(self, event):
-        # Save current position
+        # сохранить текущюю позицию
         self.settings.setValue('lastPosition', self.pos())
         super().closeEvent(event)
 
@@ -140,7 +137,7 @@ class SettingsWindow(QWidget):
                 self.image_window.label.resize(pixmap.size())
                 self.image_window.resize(pixmap.size())
 
-            self.image_window.updateOpacity(35)  # Установить начальную прозрачность 35%
+            self.image_window.updateOpacity(35)
             self.image_window.show()
             self.opacity_slider.setEnabled(True)
             self.fix_button.setEnabled(True)
@@ -190,11 +187,9 @@ class SettingsWindow(QWidget):
 def main():
     app = QApplication(sys.argv)
     
-    # Установить имя и ярлык приложения
     app.setApplicationName("ImageOverlayApp")
     app.setApplicationDisplayName("Image Overlay Application")
     
-    # Установить иконку приложения (замените 'icon.png' на путь к вашей иконке)
     app.setWindowIcon(QIcon('ico.jpg'))
 
     settings_window = SettingsWindow()
